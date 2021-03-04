@@ -22,7 +22,6 @@ Function Copy-Logs
         
     }
 }
-
 Function get-SCCMLogs
 {
     Param(
@@ -52,7 +51,6 @@ Function get-WindowsLogsDir
     Copy-Logs -SourceLogsPath $WindowsLogsDirPath -OutputPath $OutputPathFinal
     
 }
-
 Function get-WindowsWindowsUpgradeLogs
 {
     Param(
@@ -132,6 +130,31 @@ Function get-MemoryDumps
 
 
 }
+
+Function Get-SystemInfo 
+{
+    Param(
+        [string] $OutputPath
+    )  
+
+$GetSystemInfoCSV = "$OutputPath\Get-SystemInfo.csv"
+Get-SystemInfo | Export-Csv -Path $GetSystemInfoCSV
+$GetDiskCSV = "$OutputPath\Get-Disk.csv"
+Get-Disk | Export-Csv -Path $GetDiskCSV
+}
+
+function Get-InstalledSoftware 
+{
+    Param(
+        [string] $OutputPath
+    ) 
+
+    $GetAppxPackageCSV = "$OutputPath\Get-AppxPackage.CSV"
+    Get-AppxPackage | export-csv -Path $GetAppxPackageCSV
+    
+}
+
+
 Function Get-SCCMWindowsLogs
 {
     Param(
