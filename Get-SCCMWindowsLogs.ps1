@@ -152,6 +152,7 @@ function Get-InstalledSoftware
     $GetAppxPackageCSV = "$OutputPath\Get-AppxPackage.CSV"
     Get-AppxPackage | export-csv -Path $GetAppxPackageCSV
     
+    #Get-WmiObject Win32_Product -ComputerName localhost | Select-Object -Property *
 }
 
 
