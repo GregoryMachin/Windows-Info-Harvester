@@ -206,7 +206,8 @@ Write-Output "Output directory will be $OutputPathFinal"
 
 foreach ($log in $WhichLogs) 
 {
-
+ 
+    
     Switch ($log)
     {
 
