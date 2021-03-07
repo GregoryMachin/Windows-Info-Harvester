@@ -3,6 +3,17 @@
 
 Function Copy-Logs
 {
+    <#
+        .Description 
+        Copy-Logs is used to copy log files, it also creates missing directories. 
+        
+        .PARAMETER $SourceLogsPath
+            Provides the path to the source files.
+
+        .PARAMETER $OutputPath
+            Provides the location where files are to be coppied to. 
+
+    #>
     Param(
         [string] $SourceLogsPath,    
         [string] $OutputPath 
@@ -24,6 +35,7 @@ Function Copy-Logs
 }
 Function get-SCCMLogs
 {
+
     Param(
         [string] $SCCMLogsPath = "windows\CCM\Logs", 
         [string] $SourceRootPath = "C:",   
