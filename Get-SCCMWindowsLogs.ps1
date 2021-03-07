@@ -168,7 +168,7 @@ function Get-InstalledSoftware
 }
 
 
-Function Get-SCCMWindowsLogs
+Function Get-HarvestLogs
 {
     Param(
         [ValidateSet("SCCM","Windows_logs","EventLogs","Windows_updates","MemoryDumps","WindowsUpgrade","Everything")]
@@ -205,7 +205,7 @@ foreach ($log in $WhichLogs)
         'EventLogs'         { Get-EventLogs -OutputPath $OutputPathFinal }
         'Windows_updates'   { Get-WindowsUpdatesLogs -OutputPath $OutputPathFinal }
         'MemoryDumps'       { Get-MemoryDumps -OutputPath $OutputPathFinal }
-        'WindowsUpgrade'    { Get-WindowsWindowsUpgradeLogs -OutputPath $OutputPathFinal }
+        'Windows_Upgrade'    { Get-WindowsWindowsUpgradeLogs -OutputPath $OutputPathFinal }
         "Everything"        {  
                                 Get-SCCMLogs -OutputPath $OutputPathFinal 
                                 Get-WindowsLogsDir  -OutputPath $OutputPathFinal
