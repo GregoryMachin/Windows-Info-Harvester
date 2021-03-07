@@ -180,7 +180,17 @@ BEGIN {
 
 }
 PROCESS {
+
 $Timestamp = $(get-date -f MM-dd-yyyy_HH_mm_ss)
+
+if ($ComputerName -ne $($env:computername)){
+# then we need to set UNC Path
+$SourceRootPath = "\\$ComputerName\C$"
+} else 
+{
+    $SourceRootPath = "C:" 
+}
+
 
 $OutputPathFinal = "$OutputPath\$ComputerName"
 
@@ -200,18 +210,18 @@ foreach ($log in $WhichLogs)
     Switch ($log)
     {
 
-        'SCCM'              { Get-SCCMLogs -OutputPath $OutputPathFinal } 
-        'Windows_logs'      { Get-WindowsLogsDir -OutputPath $OutputPathFinal }
-        'EventLogs'         { Get-EventLogs -OutputPath $OutputPathFinal }
-        'Windows_updates'   { Get-WindowsUpdatesLogs -OutputPath $OutputPathFinal }
-        'MemoryDumps'       { Get-MemoryDumps -OutputPath $OutputPathFinal }
-        'Windows_Upgrade'    { Get-WindowsWindowsUpgradeLogs -OutputPath $OutputPathFinal }
+        'SCCM'              { Get-SCCMLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath} 
+        'Windows_logs'      { Get-WindowsLogsDir -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath}
+        'EventLogs'         { Get-EventLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath}
+        'Windows_updates'   { Get-WindowsUpdatesLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath}
+        'MemoryDumps'       { Get-MemoryDumps -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath}
+        'Windows_Upgrade'    { Get-WindowsWindowsUpgradeLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath}
         "Everything"        {  
-                                Get-SCCMLogs -OutputPath $OutputPathFinal 
-                                Get-WindowsLogsDir  -OutputPath $OutputPathFinal
-                                Get-EventLogs -OutputPath $OutputPathFinal
-                                Get-WindowsUpdatesLogs -OutputPath $OutputPathFinal
-                                Get-MemoryDumps -OutputPath $OutputPathFinal
+                                Get-SCCMLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath
+                                Get-WindowsLogsDir  -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath
+                                Get-EventLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath
+                                Get-WindowsUpdatesLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath
+                                Get-MemoryDumps -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath
                             }
         Default { Write-output "-WhichLogs entry missing or invalid"}
     }#Switch
