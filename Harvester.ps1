@@ -97,7 +97,7 @@ Function get-EventLogs
     $OutputPathFinal = "$OutputPath\$Subfolder"
     Copy-Logs -SourceLogsPath $EventLogsPath -OutputPath $OutputPathFinal
 }
-Function get-WindowsUpdatesLogs
+Function Get-WindowsUpdatesLogFiles
 {
     Param(
         [string] $WindowsUpdatesLogs = "Windows\logs\WindowsUpdate",
@@ -111,8 +111,8 @@ Function get-WindowsUpdatesLogs
     $OutputPathFinal = "$OutputPath\$Subfolder"
     Copy-Logs -SourceLogsPath $WindowsUpdatesLogs -OutputPath $OutputPathFinal
     Write-Output "Writing human readbale log: $OutputPathFinal\WindowsUpdate.log"
-    Get-WindowsUpdateLog -ETLPath "$OutputPathFinal\WindowsUpdate" -LogPath "$OutputPathFinal\WindowsUpdate.log"
-
+    #this doesn't work on server 2012
+    #Get-WindowsUpdateLogs -ETLPath "$OutputPathFinal\WindowsUpdate" -LogPath "$OutputPathFinal\WindowsUpdate.log"
 }
 Function get-MemoryDumps
 {
@@ -214,14 +214,14 @@ foreach ($log in $WhichLogs)
         'SCCM'              { Get-SCCMLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath} 
         'Windows_logs'      { Get-WindowsLogsDir -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath}
         'EventLogs'         { Get-EventLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath}
-        'Windows_updates'   { Get-WindowsUpdatesLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath}
+        'Windows_updates'   { Get-WindowsUpdatesLogFiles -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath}
         'MemoryDumps'       { Get-MemoryDumps -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath}
         'Windows_Upgrade'    { Get-WindowsWindowsUpgradeLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath}
         "Everything"        {  
                                 Get-SCCMLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath
                                 Get-WindowsLogsDir  -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath
                                 Get-EventLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath
-                                Get-WindowsUpdatesLogs -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath
+                                Get-WindowsUpdatesLogFiles -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath
                                 Get-MemoryDumps -OutputPath $OutputPathFinal -SourceRootPath $SourceRootPath
                             }
         Default { Write-output "-WhichLogs entry missing or invalid"}
