@@ -170,6 +170,34 @@ function Get-InstalledSoftware
 
 Function Get-HarvestLogs
 {
+<#
+        .SYNOPSIS
+        Get-HarvestLogs is used to collect log files.
+
+        .DESCRIPTION
+        Get-HarvestLogs can be used to collect targeted log files on local machines or remote machine. Logs can be targeted indivually or All logs can be collected.
+        
+
+        .PARAMETER WhichLogs
+        defines which log is the target file type log to be collected or Eve=rything. 
+
+        .PARAMETER OutputPath
+        The is the directory where the root collection directory will be created. 
+
+        .OUTPUTS
+        Copies log files to C:\temp\<ComputerName> if not specified 
+
+        .EXAMPLE
+        Import-Module .\Harvester.ps1
+        Get-HarvestLogs -WhichLogs Everything -OutputPath D:\temp -ComputerName MyComputer
+
+        .EXAMPLE
+        PS> extension -name "File" -extension "doc"
+        File.doc
+
+        .LINK
+        Set-Item
+    #>
     Param(
         [ValidateSet("SCCM","Windows_logs","EventLogs","Windows_updates","MemoryDumps","WindowsUpgrade","Everything")]
         [String[]] $WhichLogs,
